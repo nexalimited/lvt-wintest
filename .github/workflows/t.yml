@@ -2,7 +2,8 @@ name: wintest
 on: workflow_dispatch
 jobs:
   t:
-    runs-on: windows-latest
+    strategy: { fail-fast: false, matrix: { os: [windows-2025, windows-2022] } }
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
@@ -10,5 +11,5 @@ jobs:
         run: |
           Invoke-WebRequest https://github.com/nexalimited/LazyVoiceType-releases/releases/download/1.16.1016.0142/LazyVoiceType.exe -OutFile old.exe
           Invoke-WebRequest https://github.com/nexalimited/LazyVoiceType-releases/releases/download/devtest/new.exe -OutFile new.exe
-          ./run.ps1 -Label OLD116 -Exe (Resolve-Path old.exe) -Reps 2
-          ./run.ps1 -Label NEW -Exe (Resolve-Path new.exe) -Reps 3
+          ./np.ps1 -Label OLD116 -Exe (Resolve-Path old.exe) -Reps 3
+          ./np.ps1 -Label NEW -Exe (Resolve-Path new.exe) -Reps 3
