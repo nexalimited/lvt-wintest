@@ -6,7 +6,7 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-      - shell: pwsh
+      - shell: powershell
         run: |
           Invoke-WebRequest https://github.com/nexalimited/LazyVoiceType-releases/releases/download/1.16.1016.0142/LazyVoiceType.exe -OutFile old.exe
           Invoke-WebRequest https://github.com/nexalimited/LazyVoiceType-releases/releases/download/devtest/new.exe -OutFile new.exe
